@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { usePlan } from "@/app/context/PlanContext";
+import Image from "next/image";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -11,13 +12,22 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-black/90 backdrop-blur">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5">
-        <Link
-          href="/"
-          className="text-2xl font-black tracking-wider"
-        >
-          <span className="text-[#B6FF00]">FIT</span>
-          <span>LOG</span>
-        </Link>
+        <div className="flex items-center gap-2">
+          <Image
+            src="/assets/logo.png"
+            alt="FitLog Logo"
+            width={25}
+            height={25}
+          />
+
+          <Link
+            href="/"
+            className="text-2xl font-black tracking-wider"
+          >
+            <span className="text-[#B6FF00]">FIT</span>
+            <span>LOG</span>
+          </Link>
+        </div>
 
         <nav className="hidden items-center gap-8 sm:flex">
           <Link
@@ -62,3 +72,4 @@ export default function Navbar() {
     </header>
   );
 }
+
