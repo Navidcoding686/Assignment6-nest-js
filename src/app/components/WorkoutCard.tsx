@@ -1,6 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Workout } from "@/app/types";
+import { Workout } from "@/app/types"; 
+import { FiClock } from "react-icons/fi";
+import { FaFire } from "react-icons/fa";
+import { FiStar } from "react-icons/fi";
 
 export default function WorkoutCard({
   workout,
@@ -44,11 +47,11 @@ export default function WorkoutCard({
         </p>
 
         <div className="mt-5 flex items-center justify-between border-t border-white/10 pt-4 text-xs text-gray-400">
-          <span>{workout.duration} min</span>
+          <span className="flex items-center gap-1"><FiClock className="text-base" />{workout.duration} min</span>
 
-          <span>{workout.caloriesBurned} kcal</span>
+          <span className="flex items-center gap-1"><FaFire className="text-base" />{workout.caloriesBurned} kcal</span>
 
-          <span>★ {workout.rating}</span>
+          <span className="flex items-center gap-1"><FiStar className="text-base" /> {workout.rating}</span>
         </div>
       </div>
     </Link>

@@ -6,6 +6,8 @@ import { use, useEffect, useState } from "react";
 import { usePlan } from "@/app/context/PlanContext";
 import { getWorkoutById } from "@/app/utils/api";
 import { Workout } from "@/app/types";
+import { IoMdAddCircleOutline } from "react-icons/io";
+import { CiBookmark } from "react-icons/ci";
 
 type Params = Promise<{
   id: string;
@@ -92,7 +94,7 @@ export default function WorkoutDetails({
       </Link>
 
       <div className="grid gap-10 lg:grid-cols-2">
-        <div className="relative min-h-[450px] overflow-hidden rounded-3xl border border-white/10">
+        <div className="relative min-h-[450px] overflow-hidden rounded-lg border border-white/10 bg-[#15171D]">
           <Image
             src={workout.image}
             alt={workout.name}
@@ -107,7 +109,7 @@ export default function WorkoutDetails({
             {workout.muscleGroups.map((muscle) => (
               <span
                 key={muscle}
-                className="rounded-full border border-[#B6FF00]/30 bg-[#B6FF00]/10 px-3 py-1 text-xs font-bold uppercase text-[#B6FF00]"
+                className="rounded-full bg-[#1E2330] px-3 py-1 text-sm font-semibold text-white"
               >
                 {muscle}
               </span>
@@ -122,39 +124,52 @@ export default function WorkoutDetails({
             {workout.description}
           </p>
 
-          <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <div className="rounded-xl border border-white/10 bg-[#15171D] p-4">
-              <p className="text-xs text-gray-500">
-                Duration
-              </p>
-              <p className="mt-1 font-bold">
-                {workout.duration} min
+          <div className="mt-8 rounded-lg bg-[#1E2330] px-4 py-3">
+            <div className="flex justify-between py-2">
+              <p className="text-gray-300">Equipment</p>
+              <p className="font-semibold text-white">
+                {workout.equipment}
               </p>
             </div>
 
-            <div className="rounded-xl border border-white/10 bg-[#15171D] p-4">
-              <p className="text-xs text-gray-500">
-                Calories
-              </p>
-              <p className="mt-1 font-bold">
-                {workout.caloriesBurned}
+            <div className="flex justify-between border-t border-gray-600 py-2">
+              <p className="text-gray-300">Difficulty</p>
+              <p className="font-semibold text-white">
+                {workout.difficulty}
               </p>
             </div>
 
-            <div className="rounded-xl border border-white/10 bg-[#15171D] p-4">
-              <p className="text-xs text-gray-500">
-                Sets
-              </p>
-              <p className="mt-1 font-bold">
+            <div className="flex justify-between border-t border-gray-600 py-2">
+              <p className="text-gray-300">Sets</p>
+              <p className="font-semibold text-white">
                 {workout.sets}
               </p>
             </div>
 
-            <div className="rounded-xl border border-white/10 bg-[#15171D] p-4">
-              <p className="text-xs text-gray-500">
-                Rating
+            <div className="flex justify-between border-t border-gray-600 py-2">
+              <p className="text-gray-300">Reps</p>
+              <p className="font-semibold text-white">
+                {workout.reps}
               </p>
-              <p className="mt-1 font-bold">
+            </div>
+
+            <div className="flex justify-between border-t border-gray-600 py-2">
+              <p className="text-gray-300">Duration</p>
+              <p className="font-semibold text-white">
+                {workout.duration} min
+              </p>
+            </div>
+
+            <div className="flex justify-between border-t border-gray-600 py-2">
+              <p className="text-gray-300">Calories</p>
+              <p className="font-semibold text-white">
+                {workout.caloriesBurned}
+              </p>
+            </div>
+
+            <div className="flex justify-between border-t border-gray-600 py-2">
+              <p className="text-gray-300">Ratings</p>
+              <p className="font-semibold text-white">
                 ★ {workout.rating}
               </p>
             </div>
@@ -162,27 +177,21 @@ export default function WorkoutDetails({
 
           <div className="mt-8">
             <h2 className="text-xl font-bold">
-              Instructions
+              Instructions:
             </h2>
 
-            <div className="mt-4 space-y-3">
+            <ol className="mt-4 list-decimal space-y-2 pl-5 text-white">
               {workout.instructions.map(
                 (instruction, index) => (
-                  <div
+                  <li
                     key={index}
-                    className="flex gap-4 rounded-xl border border-white/10 bg-[#15171D] p-4"
+                    className="border-b border-gray-700 py-2 pl-2 text-sm leading-6 text-gray-300"
                   >
-                    <span className="font-black text-[#B6FF00]">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-
-                    <p className="text-sm leading-6 text-gray-400">
-                      {instruction}
-                    </p>
-                  </div>
+                    {instruction}
+                  </li>
                 )
               )}
-            </div>
+            </ol>
           </div>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -191,8 +200,9 @@ export default function WorkoutDetails({
               disabled={
                 isPlanFull || isAlreadyInPlan
               }
-              className="flex-1 rounded-full bg-[#B6FF00] px-6 py-4 text-sm font-black text-black transition hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-40"
+              className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#B6FF00] px-6 py-4 text-sm font-black text-black transition hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-40"
             >
+              <IoMdAddCircleOutline className="text-xl" />
               {isAlreadyInPlan
                 ? "Already in Plan"
                 : isPlanFull
@@ -203,8 +213,9 @@ export default function WorkoutDetails({
             <button
               onClick={() => addToSaved(workout)}
               disabled={isAlreadySaved}
-              className="flex-1 rounded-full border border-white/20 px-6 py-4 text-sm font-black transition hover:border-[#B6FF00] hover:text-[#B6FF00] disabled:cursor-not-allowed disabled:opacity-40"
+              className="flex flex-1 items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-4 text-sm font-black transition hover:border-[#B6FF00] hover:text-[#B6FF00] disabled:cursor-not-allowed disabled:opacity-40"
             >
+              <CiBookmark className="text-xl" />
               {isAlreadySaved
                 ? "Already Saved"
                 : "Save for Later"}
@@ -215,3 +226,4 @@ export default function WorkoutDetails({
     </section>
   );
 }
+

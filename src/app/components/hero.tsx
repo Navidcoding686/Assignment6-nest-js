@@ -3,13 +3,13 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="mx-auto grid max-w-7xl items-center gap-10 px-5 py-16 lg:grid-cols-2 lg:py-24">
+    <section className="container mx-auto mt-2 grid  items-center gap-10 rounded-[10px] border border-gray-700 bg-[#15171D] px-5 py-16 lg:grid-cols-2 lg:py-24">
       <div>
         <span className="inline-block rounded-full border border-[#B6FF00]/30 bg-[#B6FF00]/10 px-4 py-2 text-xs font-bold tracking-widest text-[#B6FF00]">
           WORKOUT LIBRARY
         </span>
 
-        <h1 className="mt-6 text-5xl font-black leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl">
+        <h1 className="mt-9 text-5xl font-black leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-7xl">
           TRAIN WITH INTENT.
           <br />
           <span className="text-[#B6FF00]">
@@ -31,16 +31,13 @@ export default function Hero() {
         </Link>
       </div>
 
-      <div className="relative h-[420px] overflow-hidden rounded-3xl border border-white/10">
+      <div className="flex justify-end">
         <Image
-          src="/assets/hero.jpg"
-          alt="Workout"
-          fill
-          priority
-          className="object-cover"
+          src="/assets/banner.png"
+          width={400}
+          height={400}
+          alt="gym"
         />
-
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
       </div>
     </section>
   );
