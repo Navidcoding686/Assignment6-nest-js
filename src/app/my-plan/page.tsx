@@ -6,6 +6,9 @@ import { usePlan } from "@/app/context/PlanContext";
 import type { PlanWorkout, Workout } from "@/app/types";
 import { IoCheckmark } from "react-icons/io5";
 import { ImCross } from "react-icons/im";
+import { FiClock } from "react-icons/fi";
+import { FaFire } from "react-icons/fa";
+import { FiStar } from "react-icons/fi";
 
 type Tab = "plan" | "saved";
 
@@ -191,17 +194,20 @@ export default function MyPlan() {
                     {item.name}
                   </h3>
 
-                  <div className="mt-2 flex flex-wrap gap-4 text-[11px] text-gray-500">
-                    <span>
-                      {item.duration} min
+                  <div className="mt-2 flex flex-col gap-2 text-[11px] text-gray-500 sm:flex-row sm:items-center sm:gap-4">
+                    <span className="flex items-center gap-1 whitespace-nowrap">
+                    <FiClock className="text-sm" />
+                    {item.duration} min
                     </span>
 
-                    <span>
-                      {item.caloriesBurned} kcal
+                    <span className="flex items-center gap-1 whitespace-nowrap">
+                    <FaFire className="text-sm" />
+                    {item.caloriesBurned} kcal
                     </span>
 
-                    <span>
-                      ★ {item.rating}
+                    <span className="flex items-center gap-1 whitespace-nowrap">
+                    <FiStar className="text-sm" />
+                    {item.rating}
                     </span>
                   </div>
 
