@@ -9,6 +9,7 @@ import { ImCross } from "react-icons/im";
 import { FiClock } from "react-icons/fi";
 import { FaFire } from "react-icons/fa";
 import { FiStar } from "react-icons/fi";
+import Image from "next/image";
 
 type Tab = "plan" | "saved";
 
@@ -176,23 +177,21 @@ export default function MyPlan() {
                 key={item.id}
                 className="flex flex-col gap-5 rounded-xl border border-white/10 bg-[#15171D] p-5 md:flex-row md:items-center md:justify-between"
               >
-                <div>
-                  <div className="flex flex-wrap gap-2">
-                    {item.muscleGroups.map(
-                      (muscle) => (
-                        <span
-                          key={muscle}
-                          className="text-[9px] font-bold uppercase tracking-wider text-[#B6FF00]"
-                        >
-                          {muscle}
-                        </span>
-                      )
-                    )}
-                  </div>
-
+              <div>
+                  <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      width={100}
+                      height={100}
+                      className=" rounded-lg"
+                    />
+                  
+                  <div>
                   <h3 className="mt-2 text-lg font-bold text-white">
                     {item.name}
                   </h3>
+                  <h3>{item.equipment}</h3>
 
                   <div className="mt-2 flex flex-col gap-2 text-[11px] text-gray-500 sm:flex-row sm:items-center sm:gap-4">
                     <span className="flex items-center gap-1 whitespace-nowrap">
@@ -209,7 +208,9 @@ export default function MyPlan() {
                     <FiStar className="text-sm" />
                     {item.rating}
                     </span>
+                    </div>
                   </div>
+                 </div>
 
                   {activeTab === "plan" &&
                     isPlanWorkout(item) &&
