@@ -52,7 +52,7 @@ export default function WorkoutDetails({
   if (loading) {
     return (
       <div className="mx-auto max-w-7xl px-5 py-20">
-        <div className="h-[500px] animate-pulse rounded-3xl bg-[#15171D]" />
+        <div className="h-[400px] animate-pulse rounded-3xl bg-[#15171D] sm:h-[500px]" />
       </div>
     );
   }
@@ -60,7 +60,7 @@ export default function WorkoutDetails({
   if (error || !workout) {
     return (
       <div className="mx-auto max-w-7xl px-5 py-24 text-center">
-        <h1 className="text-4xl font-black">
+        <h1 className="text-3xl font-black sm:text-4xl">
           Workout Not Found
         </h1>
 
@@ -85,7 +85,7 @@ export default function WorkoutDetails({
   );
 
   return (
-    <section className="mx-auto max-w-7xl px-5 py-12">
+    <section className="mx-auto max-w-7xl px-4 py-8 sm:px-5 sm:py-12">
       <Link
         href="/"
         className="mb-8 inline-block text-sm text-gray-500 transition hover:text-[#B6FF00]"
@@ -93,8 +93,9 @@ export default function WorkoutDetails({
         ← Back to Library
       </Link>
 
-      <div className="grid gap-10 lg:grid-cols-2">
-        <div className="relative min-h-[450px] overflow-hidden rounded-lg border border-white/10 bg-[#15171D]">
+      <div className="grid gap-8 lg:grid-cols-2 lg:gap-10">
+        {/* Image */}
+        <div className="relative min-h-[350px] overflow-hidden rounded-lg border border-white/10 bg-[#15171D] sm:min-h-[450px]">
           <Image
             src={workout.image}
             alt={workout.name}
@@ -104,8 +105,17 @@ export default function WorkoutDetails({
           />
         </div>
 
+        {/* Content */}
         <div>
-          <div className="flex flex-wrap gap-2">
+          <h1 className="text-4xl font-black tracking-tight sm:text-5xl">
+            {workout.name}
+          </h1>
+
+          <p className="mt-5 text-sm leading-7 text-gray-400 sm:text-base">
+            {workout.description}
+          </p>
+
+          <div className="mt-5 flex flex-wrap gap-2">
             {workout.muscleGroups.map((muscle) => (
               <span
                 key={muscle}
@@ -116,68 +126,62 @@ export default function WorkoutDetails({
             ))}
           </div>
 
-          <h1 className="mt-5 text-5xl font-black tracking-tight">
-            {workout.name}
-          </h1>
-
-          <p className="mt-5 leading-7 text-gray-400">
-            {workout.description}
-          </p>
-
+          {/* Specs */}
           <div className="mt-8 rounded-lg bg-[#1E2330] px-4 py-3">
-            <div className="flex justify-between py-2">
+            <div className="flex justify-between gap-4 py-2">
               <p className="text-gray-300">Equipment</p>
-              <p className="font-semibold text-white">
+              <p className="text-right font-semibold text-white">
                 {workout.equipment}
               </p>
             </div>
 
-            <div className="flex justify-between border-t border-gray-600 py-2">
+            <div className="flex justify-between gap-4 border-t border-gray-600 py-2">
               <p className="text-gray-300">Difficulty</p>
               <p className="font-semibold text-white">
                 {workout.difficulty}
               </p>
             </div>
 
-            <div className="flex justify-between border-t border-gray-600 py-2">
+            <div className="flex justify-between gap-4 border-t border-gray-600 py-2">
               <p className="text-gray-300">Sets</p>
               <p className="font-semibold text-white">
                 {workout.sets}
               </p>
             </div>
 
-            <div className="flex justify-between border-t border-gray-600 py-2">
+            <div className="flex justify-between gap-4 border-t border-gray-600 py-2">
               <p className="text-gray-300">Reps</p>
               <p className="font-semibold text-white">
                 {workout.reps}
               </p>
             </div>
 
-            <div className="flex justify-between border-t border-gray-600 py-2">
+            <div className="flex justify-between gap-4 border-t border-gray-600 py-2">
               <p className="text-gray-300">Duration</p>
               <p className="font-semibold text-white">
                 {workout.duration} min
               </p>
             </div>
 
-            <div className="flex justify-between border-t border-gray-600 py-2">
+            <div className="flex justify-between gap-4 border-t border-gray-600 py-2">
               <p className="text-gray-300">Calories</p>
               <p className="font-semibold text-white">
-                {workout.caloriesBurned}
+                {workout.caloriesBurned} kcal
               </p>
             </div>
 
-            <div className="flex justify-between border-t border-gray-600 py-2">
-              <p className="text-gray-300">Ratings</p>
+            <div className="flex justify-between gap-4 border-t border-gray-600 py-2">
+              <p className="text-gray-300">Rating</p>
               <p className="font-semibold text-white">
                 ★ {workout.rating}
               </p>
             </div>
           </div>
 
+          {/* Instructions */}
           <div className="mt-8">
             <h2 className="text-xl font-bold">
-              Instructions:
+              INSTRUCTIONS
             </h2>
 
             <ol className="mt-4 list-decimal space-y-2 pl-5 text-white">
@@ -194,15 +198,15 @@ export default function WorkoutDetails({
             </ol>
           </div>
 
+          {/* Buttons */}
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <button
               onClick={() => addToPlan(workout)}
-              disabled={
-                isPlanFull || isAlreadyInPlan
-              }
+              disabled={isPlanFull || isAlreadyInPlan}
               className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#B6FF00] px-6 py-4 text-sm font-black text-black transition hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-40"
             >
               <IoMdAddCircleOutline className="text-xl" />
+
               {isAlreadyInPlan
                 ? "Already in Plan"
                 : isPlanFull
@@ -216,6 +220,7 @@ export default function WorkoutDetails({
               className="flex flex-1 items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-4 text-sm font-black transition hover:border-[#B6FF00] hover:text-[#B6FF00] disabled:cursor-not-allowed disabled:opacity-40"
             >
               <CiBookmark className="text-xl" />
+
               {isAlreadySaved
                 ? "Already Saved"
                 : "Save for Later"}
@@ -226,4 +231,3 @@ export default function WorkoutDetails({
     </section>
   );
 }
-

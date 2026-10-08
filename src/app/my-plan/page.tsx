@@ -24,6 +24,7 @@ export default function MyPlan() {
     plan,
     saved,
     metrics,
+    isHydrated,
     markAsDone,
     removeFromPlan,
     removeFromSaved,
@@ -56,8 +57,31 @@ export default function MyPlan() {
     });
   }, [currentList, sortBy]);
 
+  if (!isHydrated) {
+    return (
+      <section className="mx-auto max-w-7xl px-5 py-10 md:py-12">
+        <h1 className="text-3xl font-black uppercase text-white md:text-4xl">
+          MY PLAN
+        </h1>
+
+        <p className="mt-2 text-sm text-gray-500">
+          Loading workouts…
+        </p>
+
+        <div className="mt-8 space-y-3">
+          {[1, 2, 3].map((item) => (
+            <div
+              key={item}
+              className="h-32 animate-pulse rounded-xl bg-[#15171D]"
+            />
+          ))}
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <section className="mx-auto max-w-7xl px-5 py-10 md:py-12">
+    <section className="mx-auto max-w-7xl px-4 py-8 sm:px-5 sm:py-10 md:py-12">
       <div>
         <h1 className="text-3xl font-black uppercase tracking-tight text-white md:text-4xl">
           MY PLAN
@@ -68,8 +92,9 @@ export default function MyPlan() {
         </p>
       </div>
 
-      <div className="mt-7 flex overflow-hidden rounded-xl border border-white/10 bg-[#15171D]">
-        <div className="flex-1 border-r border-white/10 px-5 py-4 md:px-6">
+      {/* Metrics */}
+      <div className="mt-7 grid grid-cols-1 overflow-hidden rounded-xl border border-white/10 bg-[#15171D] sm:grid-cols-3">
+        <div className="border-b border-white/10 px-5 py-4 sm:border-b-0 sm:border-r md:px-6">
           <p className="text-[11px] text-gray-500">
             Exercises
           </p>
@@ -79,7 +104,7 @@ export default function MyPlan() {
           </p>
         </div>
 
-        <div className="flex-1 border-r border-white/10 px-5 py-4 md:px-6">
+        <div className="border-b border-white/10 px-5 py-4 sm:border-b-0 sm:border-r md:px-6">
           <p className="text-[11px] text-gray-500">
             Minutes
           </p>
@@ -89,7 +114,7 @@ export default function MyPlan() {
           </p>
         </div>
 
-        <div className="flex-1 px-5 py-4 md:px-6">
+        <div className="px-5 py-4 md:px-6">
           <p className="text-[11px] text-gray-500">
             Calories
           </p>
@@ -100,11 +125,12 @@ export default function MyPlan() {
         </div>
       </div>
 
-      <div className="mt-6 flex items-center justify-between gap-4">
-        <div className="flex rounded-lg border border-white/10 bg-[#15171D] p-1">
+      {/* Tabs + Sort */}
+      <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex w-full rounded-lg border border-white/10 bg-[#15171D] p-1 sm:w-auto">
           <button
             onClick={() => setActiveTab("plan")}
-            className={`rounded-md px-4 py-2 text-[11px] font-medium transition ${
+            className={`flex-1 rounded-md px-4 py-2 text-[11px] font-medium transition sm:flex-none ${
               activeTab === "plan"
                 ? "bg-[#1D2028] text-white"
                 : "text-gray-500 hover:text-white"
@@ -115,7 +141,7 @@ export default function MyPlan() {
 
           <button
             onClick={() => setActiveTab("saved")}
-            className={`rounded-md px-4 py-2 text-[11px] font-medium transition ${
+            className={`flex-1 rounded-md px-4 py-2 text-[11px] font-medium transition sm:flex-none ${
               activeTab === "saved"
                 ? "bg-[#1D2028] text-white"
                 : "text-gray-500 hover:text-white"
@@ -125,8 +151,8 @@ export default function MyPlan() {
           </button>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="hidden text-[11px] text-gray-500 sm:block">
+        <div className="flex items-center justify-between gap-2 sm:justify-end">
+          <span className="text-[11px] text-gray-500">
             Sort By
           </span>
 
@@ -152,6 +178,7 @@ export default function MyPlan() {
         </div>
       </div>
 
+      {/* List */}
       <div className="mt-5">
         {sortedList.length === 0 ? (
           <div className="flex min-h-[200px] flex-col items-center justify-center rounded-xl border border-dashed border-white/10 bg-[#0F1014] px-5 py-16 text-center md:min-h-[205px]">
@@ -164,7 +191,7 @@ export default function MyPlan() {
             </p>
 
             <Link
-              href="/Workouts"
+              href="/"
               className="mt-5 rounded-full bg-[#B6FF00] px-5 py-2.5 text-[11px] font-black text-black transition hover:scale-105"
             >
               Go to workouts
@@ -175,53 +202,56 @@ export default function MyPlan() {
             {sortedList.map((item) => (
               <div
                 key={item.id}
-                className="flex flex-col gap-5 rounded-xl border border-white/10 bg-[#15171D] p-5 md:flex-row md:items-center md:justify-between"
+                className="flex flex-col gap-5 rounded-xl border border-white/10 bg-[#15171D] p-4 sm:p-5 lg:flex-row lg:items-center lg:justify-between"
               >
-              <div>
-                  <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
-                    <Image
-                      src={item.image}
-                      alt={item.name}
-                      width={100}
-                      height={100}
-                      className=" rounded-lg"
-                    />
-                  
-                  <div>
-                  <h3 className="mt-2 text-lg font-bold text-white">
-                    {item.name}
-                  </h3>
-                  <h3>{item.equipment}</h3>
+                {/* Workout info */}
+                <div className="flex min-w-0 flex-col gap-4 sm:flex-row sm:items-center">
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    width={100}
+                    height={100}
+                    className="h-[100px] w-full rounded-lg object-cover sm:w-[100px]"
+                  />
 
-                  <div className="mt-2 flex flex-col gap-2 text-[11px] text-gray-500 sm:flex-row sm:items-center sm:gap-4">
-                    <span className="flex items-center gap-1 whitespace-nowrap">
-                    <FiClock className="text-sm" />
-                    {item.duration} min
-                    </span>
+                  <div className="min-w-0">
+                    <h3 className="text-lg font-bold text-white">
+                      {item.name}
+                    </h3>
 
-                    <span className="flex items-center gap-1 whitespace-nowrap">
-                    <FaFire className="text-sm" />
-                    {item.caloriesBurned} kcal
-                    </span>
+                    <p className="mt-1 text-sm text-gray-500">
+                      {item.equipment}
+                    </p>
 
-                    <span className="flex items-center gap-1 whitespace-nowrap">
-                    <FiStar className="text-sm" />
-                    {item.rating}
-                    </span>
-                    </div>
-                  </div>
-                 </div>
-
-                  {activeTab === "plan" &&
-                    isPlanWorkout(item) &&
-                    item.isDone && (
-                      <span className="mt-3 inline-block text-[10px] font-bold text-[#B6FF00]">
-                        ✓ COMPLETED
+                    <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] text-gray-500">
+                      <span className="flex items-center gap-1 whitespace-nowrap">
+                        <FiClock className="text-sm" />
+                        {item.duration} min
                       </span>
-                    )}
+
+                      <span className="flex items-center gap-1 whitespace-nowrap">
+                        <FaFire className="text-sm" />
+                        {item.caloriesBurned} kcal
+                      </span>
+
+                      <span className="flex items-center gap-1 whitespace-nowrap">
+                        <FiStar className="text-sm" />
+                        {item.rating}
+                      </span>
+                    </div>
+
+                    {activeTab === "plan" &&
+                      isPlanWorkout(item) &&
+                      item.isDone && (
+                        <span className="mt-3 inline-block text-[10px] font-bold text-[#B6FF00]">
+                          ✓ COMPLETED
+                        </span>
+                      )}
+                  </div>
                 </div>
 
-                <div className="flex flex-wrap gap-2">
+                {/* Buttons */}
+                <div className="flex flex-wrap gap-2 lg:justify-end">
                   <Link
                     href={`/Workout/${item.id}`}
                     className="rounded-full border border-white/10 px-4 py-2 text-[10px] font-bold transition hover:border-[#B6FF00] hover:text-[#B6FF00]"
@@ -236,8 +266,9 @@ export default function MyPlan() {
                         onClick={() =>
                           markAsDone(item.id)
                         }
-                        className="rounded-full bg-[#B6FF00] px-4 py-2 text-[10px] font-bold text-black flex items-center gap-1"
-                      ><IoCheckmark/>
+                        className="flex items-center gap-1 rounded-full bg-[#B6FF00] px-4 py-2 text-[10px] font-bold text-black"
+                      >
+                        <IoCheckmark />
                         Mark as Done
                       </button>
                     )}
@@ -248,10 +279,10 @@ export default function MyPlan() {
                         ? removeFromPlan(item.id)
                         : removeFromSaved(item.id)
                     }
-                    className="rounded-full border border-red-500/30 px-4 py-2 text-[10px] font-bold text-red-400 transition hover:bg-red-500/10 flex items-center gap-1"
+                    className="flex items-center gap-1 rounded-full border border-red-500/30 px-4 py-2 text-[10px] font-bold text-red-400 transition hover:bg-red-500/10"
                   >
-                    <ImCross/>
-                     Remove
+                    <ImCross />
+                    Remove
                   </button>
                 </div>
               </div>

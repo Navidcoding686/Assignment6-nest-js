@@ -4,8 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { usePlan } from "@/app/context/PlanContext";
 import Image from "next/image";
-import React from "react";
-
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -13,25 +11,47 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-black/90 backdrop-blur">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5">
-        <div className="flex items-center gap-2">
-          <Image
-            src="/assets/logo.png"
-            alt="FitLog Logo"
-            width={25}
-            height={25}
-          />
+      <div className="mx-auto flex max-w-7xl flex-col px-5 py-4 sm:h-20 sm:flex-row sm:items-center sm:justify-between sm:py-0">
+        
+        {/* Logo */}
+        <div className="flex items-center justify-between sm:justify-start">
+          <div className="flex items-center gap-2">
+            <Image
+              src="/assets/logo.png"
+              alt="FitLog Logo"
+              width={25}
+              height={25}
+            />
 
-          <Link
-            href="/"
-            className="text-2xl font-black tracking-wider"
-          >
-            <span className="text-[#B6FF00]">FIT</span>
-            <span>LOG</span>
-          </Link>
+            <Link
+              href="/"
+              className="text-2xl font-black tracking-wider"
+            >
+              <span className="text-[#B6FF00]">FIT</span>
+              <span>LOG</span>
+            </Link>
+          </div>
+
+          {/* Mobile counters */}
+          <div className="flex items-center gap-2 sm:hidden">
+            <Link
+              href="/my-plan"
+              className="rounded-full bg-[#B6FF00] px-3 py-2 text-[10px] font-bold text-black"
+            >
+              Plan {plan.length}
+            </Link>
+
+            <Link
+              href="/my-plan"
+              className="rounded-full border border-white/20 px-3 py-2 text-[10px] font-bold text-white"
+            >
+              Saved {saved.length}
+            </Link>
+          </div>
         </div>
 
-        <nav className="hidden items-center gap-8 sm:flex">
+        {/* Navigation */}
+        <nav className="mt-4 flex items-center justify-center gap-8 sm:mt-0">
           <Link
             href="/"
             className={`text-sm font-semibold transition ${
@@ -55,7 +75,8 @@ export default function Navbar() {
           </Link>
         </nav>
 
-        <div className="flex items-center gap-2">
+        {/* Desktop counters */}
+        <div className="hidden items-center gap-2 sm:flex">
           <Link
             href="/my-plan"
             className="rounded-full bg-[#B6FF00] px-4 py-2 text-xs font-bold text-black transition hover:opacity-80"
@@ -74,4 +95,3 @@ export default function Navbar() {
     </header>
   );
 }
-

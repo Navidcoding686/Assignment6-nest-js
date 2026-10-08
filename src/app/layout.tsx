@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Toaster } from "react-hot-toast";
-import { PlanProvider } from "@/app/context/PlanContext";
-import Navbar from "@/app/components/Navbar";
-import Footer from "@/app/components/Footer";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import { PlanProvider } from "./context/PlanContext";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -21,20 +21,14 @@ export default function RootLayout({
         <PlanProvider>
           <Navbar />
 
-          <main className="min-h-screen">
-            {children}
-          </main>
+          <main>{children}</main>
 
           <Footer />
 
           <Toaster
             position="top-right"
             toastOptions={{
-              style: {
-                background: "#1a1a1a",
-                color: "#fff",
-                border: "1px solid #2a2a2a",
-              },
+              duration: 2500,
             }}
           />
         </PlanProvider>

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Workout } from "@/app/types"; 
+import { Workout } from "@/app/types";
 import { FiClock } from "react-icons/fi";
 import { FaFire } from "react-icons/fa";
 import { FiStar } from "react-icons/fi";
@@ -15,7 +15,7 @@ export default function WorkoutCard({
       href={`/Workout/${workout.id}`}
       className="group block overflow-hidden rounded-2xl border border-white/10 bg-[#15171D] transition duration-300 hover:-translate-y-1 hover:border-[#B6FF00]/50"
     >
-      <div className="relative h-[245px] w-full overflow-hidden">
+      <div className="relative h-[220px] w-full overflow-hidden sm:h-[245px]">
         <Image
           src={workout.image}
           alt={workout.name}
@@ -46,12 +46,21 @@ export default function WorkoutCard({
           {workout.equipment}
         </p>
 
-        <div className="mt-5 flex items-center justify-between border-t border-white/10 pt-4 text-xs text-gray-400">
-          <span className="flex items-center gap-1"><FiClock className="text-base" />{workout.duration} min</span>
+        <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-4 text-xs text-gray-400">
+          <span className="flex items-center gap-1 whitespace-nowrap">
+            <FiClock className="text-base" />
+            {workout.duration} min
+          </span>
 
-          <span className="flex items-center gap-1"><FaFire className="text-base" />{workout.caloriesBurned} kcal</span>
+          <span className="flex items-center gap-1 whitespace-nowrap">
+            <FaFire className="text-base" />
+            {workout.caloriesBurned} kcal
+          </span>
 
-          <span className="flex items-center gap-1"><FiStar className="text-base" /> {workout.rating}</span>
+          <span className="flex items-center gap-1 whitespace-nowrap">
+            <FiStar className="text-base" />
+            {workout.rating}
+          </span>
         </div>
       </div>
     </Link>

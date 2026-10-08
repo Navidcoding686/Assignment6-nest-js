@@ -1,6 +1,7 @@
-import { Workout } from "../types";
+import { Workout } from "@/app/types";
 
-const API_URL = "https://api.abcz.workers.dev/api/fitlog";
+const API_URL =
+  "https://api.abcz.workers.dev/api/fitlog";
 
 export async function getAllWorkouts(): Promise<Workout[]> {
   const res = await fetch(API_URL);
@@ -10,19 +11,20 @@ export async function getAllWorkouts(): Promise<Workout[]> {
   }
 
   const data = await res.json();
+
   return data;
 }
 
-export async function getWorkoutById(id: string): Promise<Workout> {
-  const workouts = await getAllWorkouts();
+export async function getWorkoutById(
+  id: string
+): Promise<Workout> {
+  const res = await fetch(`${API_URL}/${id}`);
 
-  const workout = workouts.find(
-    (item) => item.id === Number(id)
-  );
-
-  if (!workout) {
+  if (!res.ok) {
     throw new Error("Workout not found");
   }
 
-  return workout;
+  const data = await res.json();
+
+  return data;
 }

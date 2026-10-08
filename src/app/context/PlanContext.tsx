@@ -12,6 +12,7 @@ import { Workout, PlanWorkout } from "../types";
 interface PlanContextType {
   plan: PlanWorkout[];
   saved: Workout[];
+  isHydrated: boolean;
   addToPlan: (workout: Workout) => void;
   addToSaved: (workout: Workout) => void;
   removeFromPlan: (id: number) => void;
@@ -24,7 +25,8 @@ interface PlanContextType {
   };
 }
 
-const PlanContext = createContext<PlanContextType | null>(null);
+const PlanContext =
+  createContext<PlanContextType | null>(null);
 
 export function PlanProvider({
   children,
@@ -36,8 +38,13 @@ export function PlanProvider({
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
-    const storedPlan = localStorage.getItem("fitlog-plan");
-    const storedSaved = localStorage.getItem("fitlog-saved");
+    const storedPlan = localStorage.getItem(
+      "fitlog-plan"
+    );
+
+    const storedSaved = localStorage.getItem(
+      "fitlog-saved"
+    );
 
     if (storedPlan) {
       setPlan(JSON.parse(storedPlan));
@@ -52,13 +59,19 @@ export function PlanProvider({
 
   useEffect(() => {
     if (isHydrated) {
-      localStorage.setItem("fitlog-plan", JSON.stringify(plan));
+      localStorage.setItem(
+        "fitlog-plan",
+        JSON.stringify(plan)
+      );
     }
   }, [plan, isHydrated]);
 
   useEffect(() => {
     if (isHydrated) {
-      localStorage.setItem("fitlog-saved", JSON.stringify(saved));
+      localStorage.setItem(
+        "fitlog-saved",
+        JSON.stringify(saved)
+      );
     }
   }, [saved, isHydrated]);
 
@@ -68,7 +81,9 @@ export function PlanProvider({
       return;
     }
 
-    if (plan.some((item) => item.id === workout.id)) {
+    if (
+      plan.some((item) => item.id === workout.id)
+    ) {
       toast.error("Already in today's plan!");
       return;
     }
@@ -85,7 +100,9 @@ export function PlanProvider({
   };
 
   const addToSaved = (workout: Workout) => {
-    if (saved.some((item) => item.id === workout.id)) {
+    if (
+      saved.some((item) => item.id === workout.id)
+    ) {
       toast.error("Already saved!");
       return;
     }
@@ -96,12 +113,18 @@ export function PlanProvider({
   };
 
   const removeFromPlan = (id: number) => {
-    setPlan((prev) => prev.filter((item) => item.id !== id));
+    setPlan((prev) =>
+      prev.filter((item) => item.id !== id)
+    );
+
     toast.success("Removed from plan");
   };
 
   const removeFromSaved = (id: number) => {
-    setSaved((prev) => prev.filter((item) => item.id !== id));
+    setSaved((prev) =>
+      prev.filter((item) => item.id !== id)
+    );
+
     toast.success("Removed from saved");
   };
 
@@ -122,12 +145,15 @@ export function PlanProvider({
 
   const metrics = {
     exercises: plan.length,
+
     minutes: plan.reduce(
       (total, item) => total + item.duration,
       0
     ),
+
     calories: plan.reduce(
-      (total, item) => total + item.caloriesBurned,
+      (total, item) =>
+        total + item.caloriesBurned,
       0
     ),
   };
@@ -135,6 +161,7 @@ export function PlanProvider({
   const value: PlanContextType = {
     plan,
     saved,
+    isHydrated,
     addToPlan,
     addToSaved,
     removeFromPlan,
