@@ -34,7 +34,7 @@ export default function Hero() {
 
         <div className="flex justify-end">
           <Image
-            src="/assets/banner.png"
+            src= "/assets/banner.png"
             width={400}
             height={400}
             alt="gym"
